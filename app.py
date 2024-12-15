@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
-from tkinter import PhotoImage
 from functions import *
 import os
 
@@ -26,8 +25,9 @@ def process_files():
         result_df = request_handler(nums_list, file1_path)
 
         # Сохраняем результат в файл
+        path_2 = file2_path.split('/')[-1]
         result_file_path = filedialog.asksaveasfilename(defaultextension=".xlsx", filetypes=[("Книга Excel", "*.xlsx")],
-                                                        initialdir=os.getcwd(), initialfile='Ответ на запрос')
+                                                        initialdir=os.getcwd(), initialfile=f'Ответ на {path_2}')
         if result_file_path:
             result_df.save(result_file_path)
             messagebox.showinfo("Успех", f"Результат сохранен в {result_file_path}")
@@ -37,9 +37,7 @@ def process_files():
 # Создаем главное окно
 root = tk.Tk()
 root.title("Запросы в базу")
-image = PhotoImage(file="background.png")
-background_label = tk.Label(root, image=image)
-background_label.place(relwidth=1, relheight=1)
+
 # Создаем и размещаем элементы интерфейса
 label_file1 = tk.Label(root, text="Выберите файл Базы:")
 label_file1.grid(row=0, column=0, padx=15, pady=15)
@@ -65,3 +63,6 @@ button_process.grid(row=2, column=1, padx=15, pady=15)
 
 # Запускаем главный цикл обработки событий
 root.mainloop()
+
+
+# pyinstaller --onefile --windowed --icon=icon.ico --name=Запросы app.py
