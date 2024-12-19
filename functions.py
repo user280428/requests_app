@@ -51,19 +51,22 @@ def request_handler(nums_list, path='базаа.xlsx'):
     sheet = workbook['Sheet1']
     fill = PatternFill(start_color="ebf051", end_color="ebf051", fill_type="solid")
 
-    for row in range(1, sheet.max_row + 1):
-        cell = sheet.cell(row=row, column=3)
-        for num in nums_list:
-            if num in str(cell.value):
-                cell.fill = fill
 
+    for col in range(1, sheet.max_column + 1):
+        if str(sheet.cell(row=1, column=col).value) in ('Каталожный номер', 'Аналоги'):
+            for row in range(1, sheet.max_row + 1):
+                cell = sheet.cell(row=row, column=col)
+                for num in nums_list:
+                    if num in str(cell.value):
+                        cell.fill = fill
 
+    # for row in range(1, sheet.max_row + 1):
+    #     for col in range(1, sheet.max_column + 1):
+    #         cell = sheet.cell(row=row, column=col)
+    #         for num in nums_list:
+    #             if num in str(cell.value):
+    #                 cell.fill = fill
 
-    for row in range(1, sheet.max_row + 1):
-        cell = sheet.cell(row=row, column=8)
-        for num in nums_list:
-            if num in str(cell.value):
-                cell.fill = fill
 
 
     return workbook
